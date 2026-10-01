@@ -12,7 +12,9 @@ description: 为网页添加或调整水平居中、正文与图标垂直居中�
 
 - 版权名称可以是站点、品牌或系列名称，优先采用用户明确指定的名称，其次复用项目已有名称配置；没有配置名称或名称去除首尾空白后为空时，缺省使用 HICAT；不加 @。不要用 HICAT 覆盖项目已指定的名称。名称使用正常文本绑定，普通 HTML 使用 `textContent`；模板提供 `release-footer__brand` 节点供替换。版权年份使用项目约定的年份，不把 2026 永久写死为通用模板。
 - 灰蓝文字 `#68757f`、浅灰背景 `#eef1f3`、细顶边框。桌面与手机均以页脚容器为基准整体水平居中，不能在桌面断点改为左对齐。段落清除默认外边距，使用 `display: flex; flex-wrap: wrap; justify-content: center; align-items: center`；版权、版本及提交组在每行垂直居中，窄屏换行后仍水平居中。
+- 正文与徽标使用模板中的系统字体回退栈：以 `"Twemoji Country Flags", system-ui, -apple-system` 开头，后续保留 Segoe UI、Roboto、中文字体与 emoji 回退项。固定字体优先级，不要求所有设备渲染成同一个字体；实际字形由设备和已加载字体决定。桌面正文 `.875rem`（默认根字号下 14px）、手机 `.75rem`（12px），字重 400、行高 1.5。通过 `--release-footer-font-family` 允许项目明确覆盖字体。Twemoji Country Flags 只在已加载时参与匹配，不为页脚单独下载字体或引入字体服务；不要因 Bootstrap 变量中有 Lato 就覆盖实际生效的系统字体栈。
 - 版本前缀为 `Currently v`；提交号使用等宽字体，展示至少 7 位的 Git 短 SHA，不显示分支名 main。
+- 提交号使用 `SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace` 回退栈，允许通过 `--release-footer-font-monospace` 覆盖。字体变化后仍保持图标和文字元素中心对齐；徽标沿用正文字体，保留字重 700、斜体与上标位置。
 - 分支图标 18×18，viewBox 为 `0 0 24 24`，描边为 currentColor、1.5px，圆形端点与连接；保持固定尺寸、不收缩并允许 SVG 溢出。使用模板提供的完整三个节点路径。提交组使用 `inline-flex` 和 `align-items: center`，让图标与提交号的元素中心对齐，不依赖基线偏移微调图标。
 - 状态标签使用可配置的上标胶囊，白色粗斜体，位于提交号右上方。Alpha 默认显示绿色 `#198754` 的 `αlpha`（首字母是希腊字母 α）；其他阶段按下方对照表设置内容和颜色。标签字号为正文的 75%，内边距 `.35em .65em`，圆角 `50rem`。只对上标应用 `translateY(-.45em)`，不移动正文或图标，也不让上标位移改变正文行的居中位置。图标、提交号与标签作为一个整体换行。
 - 页脚置于文档流底部；页面较短时通过主容器 min-height 和内容 flex-grow 推到底部，不覆盖内容。
